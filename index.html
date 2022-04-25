@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <title>BuzzQuizz</title>
+</head>
+
+
+<body>
+    <!-- aqui é o header -->
+    <header>BuzzQuizz</header>
+
+    <!-- tela inicial -->
+    <main class=" tela-principal">
+        <div class="meus-quizz">Você não criou nenhum <br> quizz ainda :(
+            <div class="botao" onclick="mudarTelaCriacao()">Criar Quizz</div>
+        </div>
+        <!-- tela dos quizzes do servidor -->
+        <div class="todos-os-quizzes">
+            <h2>Todos os Quizzes</h2>
+            <nav class="container"></nav>
+        </div>
+    </main>
+    <!-- tela de exibição do quizz selecionado -->
+    <main class="tela-pagina-quizz"></main>
+    <!-- tela 1 - criação de quizz -->
+    <main class="tela-criarQuizz escondido">
+        <div class="titulo">Comece pelo começo</div>
+        <div class="informacoes-basicas">
+            <input type="text" placeholder="Título do seu quizz">
+            <input type="text" placeholder="URL da imagem do seu quizz">
+            <input type="text" placeholder="Quantidade de perguntas do quizz">
+            <input type="text" placeholder="quantidade de níveis do quizz">
+        </div>
+        <div class="botao-prosseguir" onclick="criarQuizz()">Prosseguir pra criar perguntas</div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
+
+

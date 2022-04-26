@@ -1,4 +1,3 @@
-
 function mudarTelaCriacao() {
     let telaInicial = document.querySelector(".tela-principal")
     telaInicial.classList.add("escondido")
@@ -7,13 +6,18 @@ function mudarTelaCriacao() {
 }
 
 let input = document.querySelectorAll(".tela-criarQuizz input")
+let titulo
+let url
+let perguntas
+let niveis
 
 function validarQuizz () {
     // inputs values
-    let titulo = input[0].value
-    let URL = input[1].value
-    let perguntas = input[2].value
-    let niveis = input[3].value
+    titulo = input[0].value
+    url = input[1].value
+    perguntas = input[2].value
+    niveis = input[3].value
+    console.log(input)
     
     // validações
     let validacoes = 0
@@ -21,36 +25,46 @@ function validarQuizz () {
     // validando titulo
     if (!(titulo.length < 20 || titulo.length > 65)) {
         validacoes += 1
+        objeto.title = titulo
     }
     
-    // validando URl
+    // validando url
     let link = ""
     let https = "https"
     for (let i = 0; i < https.length; i++){
-        link += URL[i]
+        link += url[i]
     }
     if (link == https) {
         validacoes += 1
+        objeto.image = url
     }
     // validando QTD perguntas
-    if (!(perguntas < 3)) {
+    if (perguntas >= 1) {
         validacoes += 1
+        objeto.questions.length = perguntas
+        for (let i = 0; i < perguntas; i++){
+            objeto.questions[i] = {title:"", color:"", answers:[]}
+        }
     }
     
     // validando nivel
-    if (!(niveis < 2)) {
+    if (niveis >= 1) {
         validacoes += 1
+        objeto.levels.length = niveis
+        for (let i = 0; i < niveis; i++){
+            objeto.levels[i] = {title:"", image:"", text:"", minValue: 0}
+        }
     }
     
     // não validado
     if (validacoes != 4){
         //alert("Preencha corretamente os espaços")
+        irParaPerguntas()
     }
     // validou
     if (validacoes == 4) {
         irParaPerguntas()
     }
-    irParaPerguntas()
     
 }
 
@@ -63,7 +77,6 @@ function irParaPerguntas () {
 }
 
 function colocarPerguntas () {
-    let perguntas = input[2].value
     let criarPerguntas = document.querySelector(".tela-criarPerguntas")
     for (let i = 0; i < perguntas; i++){
         criarPerguntas.innerHTML += `
@@ -90,23 +103,23 @@ function abrirPergunta (botao) {
     <input type="text" placeholder="Cor de fundo da pergunta" class="background">
     Resposta Certa
     <input type="text" placeholder="Resposta certa" class="resposta-correta">
-    <input type="text" placeholder="URL da imagem" class="URL-correta">
+    <input type="text" placeholder="url da imagem" class="url-correta">
     Respostas Incorretas
     <input type="text" placeholder="Resposta Incorreta 1" class="resposta-incorreta">
-    <input type="text" placeholder="URL da imagem 1" class="URL-incorreta">
+    <input type="text" placeholder="url da imagem 1" class="url-incorreta">
     <input type="text" placeholder="Resposta Incorreta 2" class="resposta-incorreta">
-    <input type="text" placeholder="URL da imagem 2" class="URL-incorreta">
+    <input type="text" placeholder="url da imagem 2" class="url-incorreta">
     <input type="text" placeholder="Resposta Incorreta 3" class="resposta-incorreta">
-    <input type="text" placeholder="URL da imagem 3" class="URL-incorreta">
+    <input type="text" placeholder="url da imagem 3" class="url-incorreta">
     </div>`
 }
 function validarPerguntas () {
     let textoDaPergunta = document.querySelectorAll(".configuracao-pergunta .texto-da-pergunta")
     let background = document.querySelectorAll(".configuracao-pergunta .background")
     let respostaCorreta = document.querySelectorAll(".configuracao-pergunta .resposta-correta")
-    let urlCorreta = document.querySelectorAll(".configuracao-pergunta .URL-correta")
+    let urlCorreta = document.querySelectorAll(".configuracao-pergunta .url-correta")
     let respostaIncorreta = document.querySelectorAll(".configuracao-pergunta .resposta-incorreta")
-    let urlncorretas = document.querySelectorAll(".configuracao-pergunta .URL-incorreta")
+    let urlncorretas = document.querySelectorAll(".configuracao-pergunta .url-incorreta")
     
     
     //validacoes
@@ -114,23 +127,32 @@ function validarPerguntas () {
     let validacaoPerguntas = 0
     let validacoesBackground = 0
     let validacoesRespostasCorretas = 0
-    let validacoesURLCorreta = 0
+    let validacoesurlCorreta = 0
     let validacoesErros = 0
-    let validacoesURLIncorreta = 0
+    let validacoesurlIncorreta = 0
 
     
     let quantidadePerguntas = input[2].value
 
+    for (let i = 0; i < quantidadePerguntas; i++){
+        for (let j =0; j < 4; j++){
+            objeto.questions[i].answers[j] = {text:"", image:"", isCorrectAnswer:undefined}
+        }
+    }
     //validando pergunta
     for (let i = 0; i < textoDaPergunta.length; i++) {
         let pergunta = textoDaPergunta[i].value
         if (pergunta.length >= 20){
             validacaoPerguntas += 1
+
         }
     }
 
     if (validacaoPerguntas == textoDaPergunta.length && textoDaPergunta.length == quantidadePerguntas) {
         validacoes += 1
+        for (let i = 0; i < quantidadePerguntas; i++){
+            objeto.questions[i].title = textoDaPergunta[i].value
+        }
     }
     
     //validando background
@@ -153,6 +175,9 @@ function validarPerguntas () {
     }
     if(validacoesBackground == 7 * quantidadePerguntas) {
         validacoes += 1
+        for (let i = 0; i < quantidadePerguntas; i ++){
+            objeto.questions[i].color = background[i].value
+        }
     }
 
     //validando resposta correta
@@ -164,6 +189,10 @@ function validarPerguntas () {
     }
     if (validacoesRespostasCorretas == 1 * quantidadePerguntas){
         validacoes += 1
+        for (let i = 0; i < quantidadePerguntas; i ++){
+            objeto.questions[i].answers[0].text = respostaCorreta[i].value
+            objeto.questions[i].answers[0].isCorrectAnswer = true
+        }
     }
     //validando url correta
     for (let i = 0; i < urlCorreta.length; i++){
@@ -174,12 +203,15 @@ function validarPerguntas () {
                 link += imagemResposta[j]
             }
             if (link == "https"){
-                validacoesURLCorreta += 1
+                validacoesurlCorreta += 1
             }
         }
     }
-    if (validacoesURLCorreta == 1 * quantidadePerguntas){
+    if (validacoesurlCorreta == 1 * quantidadePerguntas){
         validacoes += 1
+        for (let i = 0; i < quantidadePerguntas; i ++){
+            objeto.questions[i].answers[0].image = urlCorreta[i].value
+        }
     }
 
 
@@ -193,9 +225,15 @@ function validarPerguntas () {
     }
     if (validacoesErros == 3 * quantidadePerguntas){
         validacoes += 1
+        for (let i = 0; i < quantidadePerguntas; i ++){
+            for (let j = 1; j < 4; j++){
+                objeto.questions[i].answers[j].text = respostaIncorreta[(j-1) + (i * 3)].value
+                objeto.questions[i].answers[j].isCorrectAnswer = false
+            }
+        }
     }
     
-    //validando URL incorreta
+    //validando url incorreta
     for (let i = 0; i < urlncorretas.length; i++) {
         let imagemRespostaIncorreta = urlncorretas[i].value
         let link = ""
@@ -205,26 +243,29 @@ function validarPerguntas () {
             }
             console.log(link)
             if (link == "https"){
-                validacoesURLIncorreta += 1
+                validacoesurlIncorreta += 1
             }
         }
     }
-    if (validacoesURLIncorreta == 3 * quantidadePerguntas){
+    if (validacoesurlIncorreta == 3 * quantidadePerguntas){
         validacoes += 1
+        for (let i = 0; i < quantidadePerguntas; i ++){
+            for (let j = 1; j < 4; j++){
+                objeto.questions[i].answers[j].image = urlncorretas[(j-1)+(i*3)].value
+            }
+        }
     }
 
     //não validou
     if (validacoes != 6){
-        alert("Preencha os dados corretamente.")
+        // alert("Preencha os dados corretamente.")
+        irParaNiveis()
     }
 
     //validou
     if (validacoes == 6) {
         irParaNiveis()
     }
-    
-    
-    console.log(validacoesErros, validacoesURLIncorreta, validacoes)
 }
 
 
@@ -233,11 +274,182 @@ function irParaNiveis () {
     telaDeNiveis.classList.remove("escondido")
     let telaDePerguntas = document.querySelector(".tela-criarPerguntas")
     telaDePerguntas.classList.add("escondido")
+    colocarNiveis()
 }
 
+function colocarNiveis () {
+    let niveis = input[3].value
+    let criarNiveis = document.querySelector(".tela-criarNiveis")
+    for (let i = 0; i < niveis; i++){
+        criarNiveis.innerHTML += `
+        <div class="caixa-nivel">
+        <div class="menu-nivel">
+        Nível ${[i + 1]}
+        <ion-icon name="create-outline" onclick="abrirNivel(this)"></ion-icon>
+        </div>
+        </div>
+        `
+    }
+    criarNiveis.innerHTML += `
+    <div class="botao-finalizar" onclick="validarNiveis()">FInalizar quizz</div>
+    `
+}
+function abrirNivel (botao) {
+    botao.classList.add("escondido")
+    let pai = botao.parentNode
+    let vovo = pai.parentNode
+    vovo.innerHTML += `
+    <div class="configuracao-nivel">
+    <input type="text" placeholder="Título do nível" class="titulo-do-nivel">
+    <input type="text" placeholder="% de acerto mínima" class="percentual-acerto">
+    <input type="text" placeholder="url da imagem do nível" class="url-nivel">
+    <input type="text" placeholder="Descrição do nível" class="descricao-nivel">
+    </div>`
+}
+
+function validarNiveis () {
+    let tituloNivel = document.querySelectorAll(".titulo-do-nivel")
+    let percentualAcerto = document.querySelectorAll(".percentual-acerto")
+    let urlNivel = document.querySelectorAll(".url-nivel")
+    let descricaoNivel = document.querySelectorAll(".descricao-nivel")
 
 
 
+    let validacoes = 0
+    let validacaoTitulo = 0
+    let validacaoPercentual = 0
+    let validacaourl = 0
+    let validacaoDescricao = 0
+    
+    let quandtidadeDeNiveis = input[3].value
+    
+    //validando titulo
+    for (let i = 0; i < tituloNivel.length; i++) {
+        let nivel = tituloNivel[i].value
+        if (nivel.length >= 10) {
+            validacaoTitulo += 1
+        }
+    }
+    
+    if (validacaoTitulo == tituloNivel.length && tituloNivel.length == quandtidadeDeNiveis) {
+        validacoes += 1
+        for (let i = 0; i < quandtidadeDeNiveis; i++){
+            objeto.levels[i].title = tituloNivel[i].value
+        }
+    }
+
+
+    //validando percentual de acerto
+    for (let i = 0; i < percentualAcerto.length; i++){
+        let percentual = percentualAcerto[i].value
+        if (percentual >= 0 && percentual <= 100 && percentual != ""){
+            validacaoPercentual += 1
+        }
+    }
+
+    if (validacaoPercentual == percentualAcerto.length && percentualAcerto.length == quandtidadeDeNiveis){
+        validacoes += 1
+        for (let i = 0; i < quandtidadeDeNiveis; i++){
+            objeto.levels[i].minValue = parseInt(percentualAcerto[i].value)
+        }
+    }
+
+
+    //validando url
+    for (let i = 0; i < urlNivel.length; i++){
+        let url = urlNivel[i].value
+        link = ""
+        if (url.length >= 5){
+            for (let j = 0; j < 5; j++){
+                link += url[j]
+            }
+            if (link == "https"){
+                validacaourl += 1
+            }
+        }
+    }
+
+    if (validacaourl == urlNivel.length && urlNivel.length == quandtidadeDeNiveis){
+        validacoes += 1
+        for (let i = 0; i < quandtidadeDeNiveis ; i++){
+            objeto.levels[i].image = urlNivel[i].value
+        }
+    }
+
+
+    //validando descricao 
+    for (let i = 0; i < descricaoNivel.length; i++){    
+        let descricao = descricaoNivel[i].value
+        if (descricao.length >= 30){
+            validacaoDescricao += 1
+        }
+    }
+
+    if (validacaoDescricao == descricaoNivel.length && descricaoNivel.length == quandtidadeDeNiveis){
+        validacoes += 1
+        for (let i = 0; i < quandtidadeDeNiveis ; i++){
+            objeto.levels[i].text = descricaoNivel[i].value
+        }
+    }
+
+    //não validou
+    if (validacoes !== 4){
+        // alert("Preencha os campos corretamente")
+        irParaQuizzCriado()
+    }
+
+    //validou
+    if (validacoes == 4){
+        let enviarQuizz = axios.post("https://mock-api.driven.com.br/api/v6/buzzquizz/quizzes", objeto)
+        enviarQuizz.then(enviarQuizzAPI)
+        enviarQuizz.catch(deuErro)
+        irParaQuizzCriado()
+    }
+}
+// let idQUizzAtual = undefined
+function enviarQuizzAPI (resposta){
+    let data = resposta.data
+    console.log(data)
+//     idQUizzAtual = data.id
+}
+function deuErro(erro){
+    console.log(erro)
+}
+
+function irParaQuizzCriado () {
+    console.log("entrei")
+    let telaQuizzCriado = document.querySelector(".tela-quizzCriado")
+    telaQuizzCriado.classList.remove("escondido")
+    let telaDeNiveis = document.querySelector(".tela-criarNiveis")
+    telaDeNiveis.classList.add("escondido")
+    colocarQuizzCriado()
+}
+
+function colocarQuizzCriado () {
+    let quizzCriado = document.querySelector(".tela-quizzCriado")
+    let url = input[1].value
+    let titulo = input[0].value
+    quizzCriado.innerHTML += `
+    <div class="capaQuizz">
+        <img src="${url}"/>
+        <div class="quizz-titulo">${titulo}</div>
+    </div>
+    `
+    quizzCriado.innerHTML += `
+    <div class="acessar-quizz" onclick="acessarQuizz()">Acessar Quizz</div>
+    <div class="voltar-home" onclick="voltarHome()">Voltar pra Home</div>
+    `
+}
+let objeto = {
+    title: "",
+    image: "",
+    questions: [],
+    levels: [],
+     
+}
+function acessarQuizz () {
+    console.log(objeto)
+}
 
 
 

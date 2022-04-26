@@ -33,7 +33,7 @@ main {
 
 }
 
-main .meus-quizz {
+main .meus-quizzes {
 	color: #b9b9b9;
 	font-family: 'Roboto', sans-serif;
 	font-size: 20px;
@@ -67,8 +67,7 @@ main .botao {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding-top: 140px;
-	padding-bottom: 435px;
+	padding: 140px 0;
 
 }
 
@@ -126,17 +125,109 @@ main .botao {
 	height: 54px;
 }
 
+
+.tela-criarPerguntas {
+	background-color: #FAFAFA;
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
+	padding: 140px 0;
+	gap: 23px;
+}
+.tela-criarPerguntas .titulo {
+	font-family: 'Roboto', sans-serif;
+	font-size: 23px;
+	font-weight: 700;
+	
+	margin-bottom: 27px;
+}
+.tela-criarPerguntas .caixa-pergunta {
+	background-color: #FFFFFF;
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+	font-weight: 700;
+
+	display: flex;
+	flex-direction: column;	
+
+	padding-top: 27px;
+	padding-right: 20px;
+	padding-bottom: 25px;
+	padding-left: 16px;
+	width: 601px;
+	gap: 20px;
+}
+.tela-criarPerguntas .caixa-pergunta .menu-pergunta {
+	display: flex;
+	justify-content: space-between;
+}
+.tela-criarPerguntas .caixa-pergunta input {
+	color: #bababa;
+	border: 1px solid #D1D1D1;
+	font-family: 'Roboto', sans-serif;
+	font-size: 19px;
+	font-style: italic;
+
+	display: flex;
+	align-items: center;
+
+	padding-left: 23px;
+	width: 546px;
+	height: 46px;
+}
+.tela-criarPerguntas .caixa-pergunta .configuracao-pergunta {
+	background-color: #FFFFFF;
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+	font-weight: 700;
+
+	display: flex;
+	flex-direction: column;	
+
+	padding-top: 27px;
+	padding-right: -20px;
+	padding-bottom: 25px;
+	padding-left: 16px;
+	margin-left: -16px;
+	width: 601px;
+	gap: 20px;
+}
+.tela-criarPerguntas .pergunta-compacta {
+	background-color: #FFFFFF;
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
+	font-weight: 700;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	padding: 0 18px;
+	width: 601px;
+	height: 74px;
+}
+.tela-criarPerguntas .botao-prosseguir {
+	background-color: #ec362d;
+	color: #fff5f4;
+	font-family: 'Roboto', sans-serif;
+	font-size: 21px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 15px;
+
+	margin-top: 85px;
+	width: 369px;
+	height: 54px;
+}
+
 .escondido {
 	display: none;
 }
-
-
-
-
-
-
-
-
 
 
 
